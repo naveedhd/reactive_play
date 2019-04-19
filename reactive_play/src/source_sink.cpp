@@ -9,6 +9,7 @@
 #include <boost/signals2.hpp>
 #include <react/react.h>
 #include <reactive/reactive.h>
+#include <rxcpp/rx.hpp>
 
 #include "data_types.h"
 #include "utility.h"
@@ -101,6 +102,23 @@ int main() {
 
   print_duration("reactive", reactive_duration);
 
+  /* rxcpp example */
+  const rxcpp::subjects::subject<Foo> rx_subject;
+
+  rx_subject.get_observable()
+    .subscribe(
+      consume,
+      [] () { cout << "Completed!" << endl; });
+    
+  const auto rx_duration = time_run(
+    [&rx_subject]() {
+      for(auto i = 0; i < LOOP_COUNT; ++i) {
+        rx_subject.get_subscriber().on_next(Foo(i));
+      }
+    });
+
+  print_duration("rxcpp", rx_duration);
+
   cout << endl;
 
   /* stats */
@@ -109,6 +127,7 @@ int main() {
   print_duration_diff("Simple function", simple_duration, "Boost", boost_duration);
   print_duration_diff("Simple function", simple_duration, "CppReact", react_duration);
   print_duration_diff("Simple function", simple_duration, "reactive", reactive_duration);
+  print_duration_diff("Simple function", simple_duration, "rxcpp", rx_duration);
 
   cout << endl;
 
@@ -116,6 +135,7 @@ int main() {
   print_duration_diff("Observable", observable_duration, "Boost", boost_duration);
   print_duration_diff("Observable", observable_duration, "CppReact", react_duration);
   print_duration_diff("Observable", observable_duration, "reactive", reactive_duration);
+  print_duration_diff("Observable function", observable_duration, "rxcpp", rx_duration);
 
 
   /* exit */

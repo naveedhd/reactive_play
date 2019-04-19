@@ -11,25 +11,29 @@ Following libraries are peeked on:
 - `boostorg/signals2 <https://github.com/boostorg/signals2>`_
 - `schlangster/cpp.react <https://github.com/schlangster/cpp.react>`_
 - `tower120/reactive <https://github.com/tower120/reactive>`_
+- `ReactiveX/RxCpp <https://github.com/ReactiveX/RxCpp>`_
 
 **Simple Source/Sink**
 
 .. code:: bash
 
-    Simple function duration: 8762 ns
-    Observable duration: 74957 ns
-    frp duration: 1315947 ns
-    Boost duration: 743377 ns
-    CppReact duration: 733117 ns
-    reactive duration: 173099 ns
+    Simple function duration: 8741 ns
+    Observable duration: 72559 ns
+    frp duration: 1300638 ns
+    Boost duration: 725709 ns
+    CppReact duration: 735398 ns
+    reactive duration: 173615 ns
+    rxcpp duration: 777221 ns
 
     Observable / Simple function : 8
-    frp / Simple function : 150
-    Boost / Simple function : 84
-    CppReact / Simple function : 83
+    frp / Simple function : 148
+    Boost / Simple function : 83
+    CppReact / Simple function : 84
     reactive / Simple function : 19
+    rxcpp / Simple function : 88
 
     frp / Observable : 17
-    Boost / Observable : 9
-    CppReact / Observable : 9
+    Boost / Observable : 10
+    CppReact / Observable : 10
     reactive / Observable : 2
+    rxcpp / Observable function : 10
