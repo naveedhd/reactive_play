@@ -37,3 +37,19 @@ Following libraries are peeked on:
     CppReact / Observable : 10
     reactive / Observable : 2
     rxcpp / Observable function : 10
+
+**Reactive Values**
+
+.. code:: bash
+
+    Simple function duration: 20173 ns
+    Observable duration: 1483838 ns
+    CppReact duration: 2391185 ns
+    reactive duration: 1424590 ns
+
+    Observable / Simple function : 73
+    CppReact / Simple function : 118
+    reactive / Simple function : 70
+
+    CppReact / Observable : 1
+    reactive / Observable : 0

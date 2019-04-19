@@ -3,10 +3,15 @@
 #include <chrono>
 #include <iostream>
 
+#include "data_types.h"
+
 using std::cout;
 using std::endl;
 
+static size_t const LOOP_COUNT = 1000;
 static unsigned long const REPEAT_COUNT = 1'000;
+
+void consume(Foo f) { f(); }
 
 template <typename Function>
 inline auto time_run(Function && function) {

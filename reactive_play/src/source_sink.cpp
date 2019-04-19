@@ -11,14 +11,10 @@
 #include <reactive/reactive.h>
 #include <rxcpp/rx.hpp>
 
-#include "data_types.h"
 #include "utility.h"
 
+/** cpp react stuff */
 REACTIVE_DOMAIN(D, react::sequential)
-
-static size_t const LOOP_COUNT = 1000;
-
-void consume(Foo f) { f(); }
 
 int main() {
 
@@ -34,7 +30,7 @@ int main() {
 
   /* Observable Example */
   observable::subject<void(Foo)> subject;
-  subject.subscribe(consume); // [](auto&& foo) { consume(foo); });
+  subject.subscribe(consume);
 
   const auto observable_duration = time_run(
     [&subject]() {
@@ -61,7 +57,7 @@ int main() {
 
   /* Boost example */
   boost::signals2::signal<void(Foo)> sig;
-  sig.connect(consume); // [](auto&& foo) { consume(foo); });
+  sig.connect(consume);
 
   const auto boost_duration = time_run(
     [&sig]() {
@@ -73,11 +69,9 @@ int main() {
   print_duration("Boost", boost_duration);
 
   /** CppReact example **/
-  react::VarSignal<D, Foo> signal = react::MakeVar<D>(Foo(0));
+  react::VarSignal<D, Foo> signal = react::MakeVar<D>(Foo());
 
-  react::Observe(signal, [] (Foo foo) {
-      consume(foo);
-  });
+  react::Observe(signal, consume);
 
   const auto react_duration = time_run(
     [&signal]() {
@@ -119,9 +113,9 @@ int main() {
 
   print_duration("rxcpp", rx_duration);
 
+  /* stats */
   cout << endl;
 
-  /* stats */
   print_duration_diff("Simple function", simple_duration, "Observable", observable_duration);
   print_duration_diff("Simple function", simple_duration, "frp", frp_duration);
   print_duration_diff("Simple function", simple_duration, "Boost", boost_duration);
@@ -135,7 +129,7 @@ int main() {
   print_duration_diff("Observable", observable_duration, "Boost", boost_duration);
   print_duration_diff("Observable", observable_duration, "CppReact", react_duration);
   print_duration_diff("Observable", observable_duration, "reactive", reactive_duration);
-  print_duration_diff("Observable function", observable_duration, "rxcpp", rx_duration);
+  print_duration_diff("Observable", observable_duration, "rxcpp", rx_duration);
 
 
   /* exit */
